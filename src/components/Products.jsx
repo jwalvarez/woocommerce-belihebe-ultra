@@ -12,7 +12,7 @@ const Products = ({ products, showLoadFile }) => {
   const notify = (product) => {
     toast.success(`${product} Creado`, {
       position: toast.POSITION.TOP_RIGHT,
-      theme: "colored",
+      theme: "dark",
       icon: "👌"
     });;
   }
@@ -26,8 +26,27 @@ const Products = ({ products, showLoadFile }) => {
     for await (const product of products) {
       let response;
       if (index > 2) {
-        await createProduct(product)
-        notify(product[5])
+        await toast.promise(
+          createProduct(product),
+          {
+            pending: {
+              render() {
+                return `Creando ${product[5]}`
+              },
+              theme: "dark",
+              icon: "🥣",
+              position: toast.POSITION.BOTTOM_RIGHT,
+            },
+            success: {
+              render() {
+                return `${product[5]} Creado`
+              },
+              theme: "colored",
+              icon: "🥝"
+            },
+            error: `Error al crear ${product[5]}`,
+          },
+        );
       }
       // console.log(response)
       index++;
@@ -57,9 +76,9 @@ const Products = ({ products, showLoadFile }) => {
         )} */}
 
 
-        <div className="flex justify-between mt-20">
+        <div className="flex justify-between mt-2">
           <h2 className="py-6 my-auto top-24 text-4xl font-bold text-gray-700">
-            Productos
+            Productos desde excel
           </h2>
           <button
             onClick={() => creteProducts(products)}
