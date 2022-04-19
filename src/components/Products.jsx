@@ -4,11 +4,36 @@ import Product from "./Product";
 import { createProduct } from "../utils/Woocommerce";
 import ProductDetail from "./ProductDetail";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Products = ({ products, showLoadFile }) => {
 
-  const creteProducts = () => {
-    console.log(products[3]);
-    createProduct(products[3]);
+  const notify = (product) => {
+    toast.success(`${product} Creado`, {
+      position: toast.POSITION.TOP_RIGHT,
+      theme: "colored",
+      icon: "👌"
+    });;
+  }
+
+  async function creteProducts() {
+    // const response = await createProduct(products[3]);
+    // console.log(response);
+    // console.log("Esta linea no deberia imprimirse 🐦")
+
+    let index = 0;
+    for await (const product of products) {
+      let response;
+      if (index > 2) {
+        await createProduct(product)
+        notify(product[5])
+      }
+      // console.log(response)
+      index++;
+    };
+
+    console.log("Mostrar alert aqui :3")
   };
 
   const localProducts = JSON.parse(localStorage.getItem('localProducts')) ?? [];
@@ -19,6 +44,8 @@ const Products = ({ products, showLoadFile }) => {
 
   return (
     <div className="sticky">
+
+      <ToastContainer />
       <div className="px-10">
         {/* <ProductDetail showCurrentProductDetail={showCurrentProductDetail} setShowCurrentProductDetail={setShowCurrentProductDetail} currentProduct={currentProduct} /> */}
 

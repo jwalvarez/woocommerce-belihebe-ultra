@@ -3,11 +3,14 @@ import ProductDetail from "./ProductDetail";
 
 const Product = ({ product, index, setCurrentProduct, setShowCurrentProductDetail }) => {
 
+  const categories = [product[14], product[15], product[16], , product[17]]
+
   const showModal = () => {
     setCurrentProduct(product)
     setShowCurrentProductDetail(true)
     setShow(!show)
   }
+
   const [show, setShow] = useState(false)
 
   return (
@@ -22,9 +25,14 @@ const Product = ({ product, index, setCurrentProduct, setShowCurrentProductDetai
           </span>
         </div>
         <div className="flex">
-          <span className="bg-indigo-200 px-5 sm:block hidden rounded-full text-sm text-zinc-900 my-auto">
-            {product[14]}
-          </span>
+          {
+            categories.map(category =>
+              category != undefined &&
+              <span key={category} className="bg-indigo-200 px-5 py-1 sm:block hidden rounded-full text-sm text-zinc-900 my-auto mr-2">
+                {category}
+              </span>
+            )
+          }
 
           <span className="text-sm font-semibold text-zinc-900 mx-4 my-auto inline">
             $ {product[8]}

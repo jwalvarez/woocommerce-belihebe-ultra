@@ -4,7 +4,7 @@ import { categories } from "../constants/categories"
 const ck = import.meta.env.VITE_CONSUMER_KEY
 const cs = import.meta.env.VITE_CONSUMER_SECRET
 
-export function createProduct(product) {
+export async function createProduct(product) {
   console.log("CREANDO PRODUCTO");
   const wooProduct = {
     name: product[5],
@@ -46,7 +46,7 @@ export function createProduct(product) {
   };
   console.log(wooProduct);
 
-  axios({
+  await axios({
     method: "post",
     url: `https://www.belihebe.com/wp-json/wc/v3/products?consumer_key=${ck}&consumer_secret=${cs}`,
     data: wooProduct,
