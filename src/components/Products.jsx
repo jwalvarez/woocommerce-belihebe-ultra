@@ -7,7 +7,8 @@ import ProductDetail from "./ProductDetail";
 const Products = ({ products, showLoadFile }) => {
 
   const creteProducts = () => {
-    createProduct(products[5]);
+    console.log(products[3]);
+    createProduct(products[3]);
   };
 
   const localProducts = JSON.parse(localStorage.getItem('localProducts')) ?? [];
@@ -19,7 +20,7 @@ const Products = ({ products, showLoadFile }) => {
   return (
     <div className="sticky">
       <div className="px-10">
-        <ProductDetail showCurrentProductDetail={showCurrentProductDetail} setShowCurrentProductDetail={setShowCurrentProductDetail} currentProduct={currentProduct} />
+        {/* <ProductDetail showCurrentProductDetail={showCurrentProductDetail} setShowCurrentProductDetail={setShowCurrentProductDetail} currentProduct={currentProduct} /> */}
 
         {/* {!showLoadFile && (
           <Resume
@@ -41,7 +42,7 @@ const Products = ({ products, showLoadFile }) => {
           </button>
         </div>
         <div className="pb-6">
-          {localProducts.map(
+          {products.map(
             (product, index) =>
               index > 2 && <Product key={index} product={product} index={index} setCurrentProduct={setCurrentProduct} setShowCurrentProductDetail={setShowCurrentProductDetail} />
           )}

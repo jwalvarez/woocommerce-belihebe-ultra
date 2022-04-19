@@ -8,7 +8,7 @@ const ReadFile = ({ showLoadFile, setProducts, setShowLoadFile }) => {
     input &&
       readXlsxFile(input.files[0]).then((rows) => {
         setProducts(rows);
-        localStorage.setItem('localProducts', JSON.stringify(rows));
+        // localStorage.setItem('localProducts', JSON.stringify(rows));
         setShowLoadFile(false);
       });
   };
