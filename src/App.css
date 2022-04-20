@@ -40,3 +40,8 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+input[type=file]::-webkit-file-upload-button,
+input[type=file]::file-selector-button {
+  display: none;
+}

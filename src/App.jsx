@@ -9,8 +9,6 @@ import SideBar from "./components/SideBar";
 import Products from "./components/Products";
 import ReadFile from "./components/ReadFile";
 
-
-
 function App() {
   const [products, setProducts] = useState([]);
   const [showLoadFile, setShowLoadFile] = useState(true);
@@ -18,7 +16,6 @@ function App() {
   return (
     // <div className="p-6 h-screen md:w-3/6 w-[90] mx-auto">
     <div className="App">
-
       {/* {products.length != 0 && (
         <Header products={products.length != 0 && products} />
       )} */}
@@ -49,7 +46,6 @@ function App() {
             </Routes>
           </div>
         </div>
-
       </div>
     </div>
   );
