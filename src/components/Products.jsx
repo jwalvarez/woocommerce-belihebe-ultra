@@ -84,7 +84,7 @@ const Products = ({ products, showLoadFile }) => {
             onClick={() => creteProducts(products)}
             className="px-10 my-5 col-end-7 col-span-2 group relative py-3 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg shadow-indigo-400"
           >
-            Crear Productos
+            Montar Productos
           </button>
         </div>
         <div className="pb-6">
