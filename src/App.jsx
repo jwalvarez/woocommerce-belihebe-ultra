@@ -8,6 +8,7 @@ import Resume from "./components/Resume";
 import SideBar from "./components/SideBar";
 import Products from "./components/Products";
 import ReadFile from "./components/ReadFile";
+import ListWooProducts from "./pages/ListWooProducts";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -38,11 +39,12 @@ function App() {
                 }
               ></Route>
               <Route
-                path="products"
+                path="products/create"
                 element={
                   <Products products={products} showLoadFile={showLoadFile} />
                 }
               ></Route>
+              <Route path="products/list" element={<ListWooProducts />}></Route>
             </Routes>
           </div>
         </div>

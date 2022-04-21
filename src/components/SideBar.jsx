@@ -39,9 +39,18 @@ const SideBar = () => {
         </li>
         <li>
           <span className="my-0 px-6 py-2 flex">
-            <Link to="products">
+            <Link to="products/create">
               <h2 className="cursor-pointer text-indigo-200 hover:text-indigo-50 text-xl font-black my-auto ml-2">
-                Productos
+                Montar Productos
+              </h2>
+            </Link>
+          </span>
+        </li>
+        <li>
+          <span className="my-0 px-6 py-2 flex">
+            <Link to="products/list">
+              <h2 className="cursor-pointer text-indigo-200 hover:text-indigo-50 text-xl font-black my-auto ml-2">
+                Descargar Productos
               </h2>
             </Link>
           </span>
