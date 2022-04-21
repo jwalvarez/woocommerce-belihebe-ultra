@@ -85,12 +85,28 @@ const ListWooProducts = () => {
             </option>
           ))}
         </select>
-        <button
-          onClick={() => getProducts()}
-          className="px-10 my-5 col-end-7 col-span-2 group relative py-3 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg shadow-indigo-400"
-        >
-          Obtener productos
-        </button>
+        <div className="flex">
+          <button className="flex px-10 mx-2 my-5 col-end-7 col-span-2 group relative py-3 border border-indigo-500 text-sm font-medium rounded-md text-indigo-600 focus:ring-offset-2 shadow-lg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-download mr-4"
+              viewBox="0 0 16 16"
+            >
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+            </svg>
+            Descargar
+          </button>
+          <button
+            onClick={() => getProducts()}
+            className="px-10 my-5 mx-2 col-end-7 col-span-2 group relative py-3 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg shadow-indigo-400"
+          >
+            Obtener productos
+          </button>
+        </div>
       </div>
       <ul className="pb-10">
         {wooProducts.map(
