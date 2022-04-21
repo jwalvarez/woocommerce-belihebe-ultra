@@ -2,8 +2,18 @@ import React, { useState, useEffect } from "react";
 import { getProductsAttributes } from "../utils/getProductsAttributes";
 import Select from "react-select";
 import { getWooProducts } from "../utils/getWooProducts";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ListWooProducts = () => {
+  const notify = () => {
+    toast.success(`Se han leido todos los productos`, {
+      position: toast.POSITION.TOP_RIGHT,
+      theme: "dark",
+      icon: "👌",
+    });
+  };
+
   const [attributes, setAttributes] = useState([
     { value: 12, label: "Cargando marcas..." },
   ]);
@@ -29,6 +39,27 @@ const ListWooProducts = () => {
     });
 
     setAttributes(wooAttributes);
+  }
+
+  async function toastGetProducts() {
+    await toast.promise(getProducts(), {
+      pending: {
+        render() {
+          return `Obteniendo productos desde WooCommercer`;
+        },
+        theme: "dark",
+        icon: "🔥",
+        position: toast.POSITION.BOTTOM_RIGHT,
+      },
+      success: {
+        render() {
+          return `Se han leido los productos correctamente`;
+        },
+        theme: "colored",
+        icon: "🍕",
+      },
+      error: `Error al cargar productos :c`,
+    });
   }
 
   async function getProducts() {
@@ -62,6 +93,8 @@ const ListWooProducts = () => {
 
   return (
     <div className="pt-10 mx-10 my-auto h-full mt-2">
+      <ToastContainer />
+
       <h2 className="my-auto top-24 text-4xl text-left font-bold text-gray-700">
         Descargar Productos ({selectedAttribute.label})
       </h2>
@@ -101,7 +134,7 @@ const ListWooProducts = () => {
             Descargar
           </button>
           <button
-            onClick={() => getProducts()}
+            onClick={() => toastGetProducts()}
             className="px-10 my-5 mx-2 col-end-7 col-span-2 group relative py-3 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg shadow-indigo-400"
           >
             Obtener productos
