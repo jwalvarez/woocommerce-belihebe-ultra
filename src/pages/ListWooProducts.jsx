@@ -25,6 +25,62 @@ const ListWooProducts = () => {
     getAttributes(3);
   }, []);
 
+  // todo: Match every object with a column in a row for the csv
+  async function saveProducts() {
+    let products = [];
+    for (const p of wooProducts) {
+      // wooProducts.forEach((p) => {
+      products.push([
+        //todo: FIX THIS LINE, image uri is not acceted by web to download csv :c
+        p["images"][0],
+        "as",
+        "as",
+        p["sku"],
+        "brand",
+        p["name"],
+        "linea especìfica",
+        "descriociob corta",
+        "precio",
+        "QUE ES",
+        "BENEFICIOS",
+        "ACTIVOS PRINCIPALES",
+        "MODO DE USO",
+        "MARCA",
+        "CATEGORIA 1",
+        "CATEGORIA 2",
+        "CATEGORIA 3",
+        "CATEGORIA 4",
+        "NECESIDAD 1",
+        "NECESIDAD 2",
+        "NECESIDAD 3",
+        "NECESIDAD 4",
+        "TIPO DE PIEL",
+      ]);
+    }
+    // );
+
+    // const rows = [
+    //   ["name1", "city1", "some other info"],
+    //   ["name2", "city2", "more info"],
+    // ];
+    // console.log(rows);
+
+    downloadCSV(products);
+    console.log("No se debe imprimir");
+  }
+
+  function downloadCSV(rows) {
+    let csvContent = "data:text/csv;charset=utf-8,";
+
+    rows.forEach(function (rowArray) {
+      let row = rowArray.join(",");
+      csvContent += row + "\r\n";
+    });
+
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+  }
+
   async function getAttributes(id) {
     const wooAttributes = await getProductsAttributes(id);
 
@@ -119,7 +175,10 @@ const ListWooProducts = () => {
         </select>
         <div className="flex">
           {wooProducts.length != 0 && (
-            <button className="flex px-10 mx-2 my-5 col-end-7 col-span-2 group relative py-3 border border-indigo-500 text-sm font-medium rounded-md text-indigo-600 focus:ring-offset-2 shadow-lg">
+            <button
+              onClick={saveProducts}
+              className="flex px-10 mx-2 my-5 col-end-7 col-span-2 group relative py-3 border border-indigo-500 text-sm font-medium rounded-md text-indigo-600 focus:ring-offset-2 shadow-lg"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
