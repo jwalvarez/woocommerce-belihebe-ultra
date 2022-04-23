@@ -25,6 +25,19 @@ const ListWooProducts = () => {
     getAttributes(3);
   }, []);
 
+  async function getDescription(description) {
+    description = description
+      .replace(/<[^>]+>/g, "")
+      .replaceAll("\n", "")
+      .replaceAll("¿QUÉ ES?", "");
+
+    console.log(description.split(/¿[a-z\s]+\?/i)[0]);
+
+    return description.split(/¿[a-z\s]+\?/i);
+  }
+
+  function getAttribute() {}
+
   // todo: Match every object with a column in a row for the csv
   async function saveProducts() {
     let products = [
@@ -68,32 +81,56 @@ const ListWooProducts = () => {
     ];
     for (const p of wooProducts) {
       // wooProducts.forEach((p) => {
+      let description = await getDescription(p["description"]);
       products.push([
         //todo: FIX THIS LINE, image uri is not acceted by web to download csv :c
-        // "www.google.com/?hl=es",
         p["images"][0]["src"].replace("https://", ""),
         p["images"][1]?.["src"].replace("https://", ""),
         p["images"][2]?.["src"].replace("https://", ""),
         p["sku"],
-        "brand",
+        p["attributes"].filter((a) => a.name == "MARCA")[0].options[0] ?? "",
         p["name"],
-        "linea especìfica",
-        "descriociob corta",
-        "precio",
-        "QUE ES",
-        "BENEFICIOS",
-        "ACTIVOS PRINCIPALES",
-        "MODO DE USO",
-        "MARCA",
-        "CATEGORIA 1",
-        "CATEGORIA 2",
-        "CATEGORIA 3",
-        "CATEGORIA 4",
-        "NECESIDAD 1",
-        "NECESIDAD 2",
-        "NECESIDAD 3",
-        "NECESIDAD 4",
-        "TIPO DE PIEL",
+        "Specific line",
+        p["short_description"].replace(/<[^>]+>/g, "").replaceAll("\n", ""),
+        p["price"],
+        `"${description[0]}"`,
+        `"${description[1]}"`,
+        `"${description[2]}"`,
+        `"${description[3]}"`,
+        p["attributes"].filter((a) => a.name == "MARCA")[0].options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[0] ??
+          "",
+        p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[1] ??
+          "",
+        p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[2] ??
+          "",
+        p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[3] ??
+          "",
+        p["attributes"].filter((a) => a.name == "¿CUÁL ES TU NECESIDAD?")[0]
+          ?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "¿CUÁL ES TU NECESIDAD?")[0]
+          ?.options[1] ?? "",
+        p["attributes"].filter((a) => a.name == "¿CUÁL ES TU NECESIDAD?")[0]
+          ?.options[2] ?? "",
+        p["attributes"].filter((a) => a.name == "¿CUÁL ES TU NECESIDAD?")[0]
+          ?.options[3] ?? "",
+        p["attributes"].filter((a) => a.name == "TIPO DE PIEL")[0]
+          ?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "MODO DE USO")[0]?.options[0] ??
+          "",
+        p["attributes"].filter((a) => a.name == "TEXTURA")[0]?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "CONTENIDO")[0]?.options[0] ??
+          "",
+        p["attributes"].filter((a) => a.name == "SPF")[0]?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "COLOR")[0]?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "TESTADO DERMATOLÓGICAMENTE")[0]
+          ?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "TESTADO OFTALMOLÓGICAMENTE")[0]
+          ?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "TESTADO EN ANIMALES")[0]
+          ?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "GENERO")[0]?.options[0] ?? "",
+        p["attributes"].filter((a) => a.name == "PAÍS")[0]?.options[0] ?? "",
       ]);
     }
     // );
@@ -109,15 +146,20 @@ const ListWooProducts = () => {
   }
 
   function downloadCSV(rows) {
-    let csvContent = "data:text/csv;charset=utf-8,";
+    let csvContent = "";
 
     rows.forEach(function (rowArray) {
       let row = rowArray.join(",");
       csvContent += row + "\r\n";
     });
 
-    var encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
+    var link = window.document.createElement("a");
+    link.setAttribute(
+      "href",
+      "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvContent)
+    );
+    link.setAttribute("download", `${selectedAttribute.label}.csv`);
+    link.click();
   }
 
   async function getAttributes(id) {
@@ -156,7 +198,7 @@ const ListWooProducts = () => {
   async function getProducts() {
     console.log("Obteniendo Productos");
     setIsLoading(true);
-    let page = 1;
+    let page = 8;
     const n = 1;
     let stop = false;
     let products = [];
