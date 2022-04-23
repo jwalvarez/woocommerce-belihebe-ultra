@@ -27,14 +27,53 @@ const ListWooProducts = () => {
 
   // todo: Match every object with a column in a row for the csv
   async function saveProducts() {
-    let products = [];
+    let products = [
+      [],
+      [],
+      [
+        "IMAGEN DEL PRODUCTO (FONDO BLANCO)",
+        "2DA IMAGEN (EMPAQUE)",
+        "3RA IMAGEN (TEXTURA)",
+        "SKU",
+        "MARCA",
+        "NOMBRE OFICIAL",
+        "LÍNEA ESPECÍFICA",
+        "DESCRIPCIÓN CORTA DEL PRODUCTO (QUE VENDE)",
+        "PRECIO",
+        "¿QUÉ ES?",
+        "¿BENEFICIOS?",
+        "¿ACTIVOS PRINCIPALES?",
+        "¿MODO DE USO?",
+        "1.MARCA",
+        "2.1 CATEGORÍA",
+        "2.2 CATEGORÍA",
+        "2.3 CATEGORÍA",
+        "2.4 CATEGORÍA",
+        "3.1 ¿CUÁL ES TU NECESIDAD?",
+        "3.2 ¿CUÁL ES TU NECESIDAD?",
+        "3.3 ¿CUÁL ES TU NECESIDAD?",
+        "3.4 ¿CUÁL ES TU NECESIDAD?",
+        "4.TIPO DE PIEL",
+        "5.MODO DE USO",
+        "6.TEXTURA",
+        "7.CONTENIDO (COLOMBIA)",
+        "8.FACTOR DE PROTECCIÓN SOLAR",
+        "9.COLOR",
+        "10.TESTADO DERMATOLÓGICAMENTE",
+        "11.TESTADO OFTALMOLÓGICAMENTE",
+        "12.TESTADO EN ANIMALES",
+        "13.GÉNERO",
+        "14.PAÍS",
+      ],
+    ];
     for (const p of wooProducts) {
       // wooProducts.forEach((p) => {
       products.push([
         //todo: FIX THIS LINE, image uri is not acceted by web to download csv :c
-        p["images"][0],
-        "as",
-        "as",
+        // "www.google.com/?hl=es",
+        p["images"][0]["src"].replace("https://", ""),
+        p["images"][1]?.["src"].replace("https://", ""),
+        p["images"][2]?.["src"].replace("https://", ""),
         p["sku"],
         "brand",
         p["name"],
