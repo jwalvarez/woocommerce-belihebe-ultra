@@ -81,6 +81,9 @@ const ListWooProducts = () => {
     ];
     for (const p of wooProducts) {
       // wooProducts.forEach((p) => {
+      let brand =
+        p["attributes"].filter((a) => a.name == "MARCA")[0].options[0] ?? "";
+      const regex = new RegExp(`${brand}`, "i");
       let description = await getDescription(p["description"]);
       products.push([
         //todo: FIX THIS LINE, image uri is not acceted by web to download csv :c
@@ -88,10 +91,13 @@ const ListWooProducts = () => {
         p["images"][1]?.["src"].replace("https://", ""),
         p["images"][2]?.["src"].replace("https://", ""),
         p["sku"],
-        p["attributes"].filter((a) => a.name == "MARCA")[0].options[0] ?? "",
+        brand,
         p["name"],
         "Specific line",
-        p["short_description"].replace(/<[^>]+>/g, "").replaceAll("\n", ""),
+        `"${p["short_description"]
+          .replace(regex, "")
+          .replace(/<[^>]+>/g, "")
+          .replaceAll("\n", "")}"`,
         p["price"],
         `"${description[0]}"`,
         `"${description[1]}"`,
