@@ -25,21 +25,36 @@ const ListWooProducts = () => {
     getAttributes(3);
   }, []);
 
+  /**
+   * It takes a string, splits it into an array of strings, and returns the array.
+   * @returns An array of strings.
+   */
   async function getDescription(description) {
     description = description
       .replace(/<[^>]+>/g, "")
-      .replaceAll("\n", "")
-      .replaceAll("¿QUÉ ES?", "");
+      .replaceAll('"', '')
+      .replaceAll("¿QUÉ ES?", "")
+      .replaceAll("&nbsp;", "")
+      .replaceAll('&amp;', '&')
+      .replaceAll("&gt;", ">")
+      .replace("ACTIVOS PRINCIPALES", "¿ACTIVOS PRINCIPALES?")
+      .replace("MODO DE USO", "¿MODO DE USO?")
+      .replace("BENEFICIOS", "¿BENEFICIOS?");
 
-    console.log(description.split(/¿[a-z\s]+\?/i)[0]);
+    // console.log(description.split(/¿[a-z\s]+\?/i)[0]);
 
-    return description.split(/¿[a-z\s]+\?/i);
+    return description.split(/¿+[a-z\s]+\?+/i);
   }
 
-  function getAttribute() {}
+  function getAttribute() { }
 
   // todo: Match every object with a column in a row for the csv
+  /**
+   * It takes an array of objects, and returns a CSV file
+   */
   async function saveProducts() {
+    console.log("Click")
+
     let products = [
       [],
       [],
@@ -80,13 +95,11 @@ const ListWooProducts = () => {
       ],
     ];
     for (const p of wooProducts) {
-      // wooProducts.forEach((p) => {
       let brand =
         p["attributes"].filter((a) => a.name == "MARCA")[0].options[0] ?? "";
       const regex = new RegExp(`${brand}`, "i");
       let description = await getDescription(p["description"]);
       products.push([
-        //todo: FIX THIS LINE, image uri is not acceted by web to download csv :c
         p["images"][0]["src"].replace("https://", ""),
         p["images"][1]?.["src"].replace("https://", ""),
         p["images"][2]?.["src"].replace("https://", ""),
@@ -97,6 +110,9 @@ const ListWooProducts = () => {
         `"${p["short_description"]
           .replace(regex, "")
           .replace(/<[^>]+>/g, "")
+          .replaceAll('&nbsp;', '')
+          .replaceAll('&amp;', '&')
+          .replaceAll('&#8211;', '-')
           .replaceAll("\n", "")}"`,
         p["price"],
         `"${description[0]}"`,
@@ -105,13 +121,13 @@ const ListWooProducts = () => {
         `"${description[3]}"`,
         p["attributes"].filter((a) => a.name == "MARCA")[0].options[0] ?? "",
         p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[0] ??
-          "",
+        "",
         p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[1] ??
-          "",
+        "",
         p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[2] ??
-          "",
+        "",
         p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[3] ??
-          "",
+        "",
         p["attributes"].filter((a) => a.name == "¿CUÁL ES TU NECESIDAD?")[0]
           ?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "¿CUÁL ES TU NECESIDAD?")[0]
@@ -123,11 +139,11 @@ const ListWooProducts = () => {
         p["attributes"].filter((a) => a.name == "TIPO DE PIEL")[0]
           ?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "MODO DE USO")[0]?.options[0] ??
-          "",
+        "",
         p["attributes"].filter((a) => a.name == "TEXTURA")[0]?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "CONTENIDO")[0]?.options[0] ??
-          "",
-        p["attributes"].filter((a) => a.name == "SPF")[0]?.options[0] ?? "",
+        "",
+        p["attributes"].filter((a) => a.name == "FACTOR DE PROTECCIÓN SOLAR (SPF)")[0]?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "COLOR")[0]?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "TESTADO DERMATOLÓGICAMENTE")[0]
           ?.options[0] ?? "",
@@ -139,18 +155,13 @@ const ListWooProducts = () => {
         p["attributes"].filter((a) => a.name == "PAÍS")[0]?.options[0] ?? "",
       ]);
     }
-    // );
-
-    // const rows = [
-    //   ["name1", "city1", "some other info"],
-    //   ["name2", "city2", "more info"],
-    // ];
-    // console.log(rows);
-
+    console.log(products)
     downloadCSV(products);
-    console.log("No se debe imprimir");
   }
 
+  /**
+   * It takes an array of arrays, and creates a CSV file from it.
+   */
   function downloadCSV(rows) {
     let csvContent = "";
 
@@ -181,6 +192,11 @@ const ListWooProducts = () => {
     setAttributes(wooAttributes);
   }
 
+  /**
+   * When the user clicks the button, show a toast with a loading message, then show a success message
+   * when the promise resolves, or an error message if it rejects.
+   * @returns a promise.
+   */
   async function toastGetProducts() {
     await toast.promise(getProducts(), {
       pending: {
@@ -204,8 +220,7 @@ const ListWooProducts = () => {
   async function getProducts() {
     console.log("Obteniendo Productos");
     setIsLoading(true);
-    let page = 8;
-    const n = 1;
+    let page = 1;
     let stop = false;
     let products = [];
     setWooProducts(products);
