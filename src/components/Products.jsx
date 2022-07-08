@@ -4,20 +4,20 @@ import Product from "./Product";
 import { createProduct } from "../utils/Woocommerce";
 import ProductDetail from "./ProductDetail";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Products = ({ products, showLoadFile }) => {
-
   const notify = (product) => {
     toast.success(`${product} Creado`, {
       position: toast.POSITION.TOP_RIGHT,
       theme: "dark",
-      icon: "👌"
-    });;
-  }
+      icon: "👌",
+    });
+  };
 
   async function creteProducts() {
+    // console.log(createProduct(products[3]));
     // const response = await createProduct(products[3]);
     // console.log(response);
     // console.log("Esta linea no deberia imprimirse 🐦")
@@ -26,44 +26,40 @@ const Products = ({ products, showLoadFile }) => {
     for await (const product of products) {
       let response;
       if (index > 2) {
-        await toast.promise(
-          createProduct(product),
-          {
-            pending: {
-              render() {
-                return `Creando ${product[5]}`
-              },
-              theme: "dark",
-              icon: "🥣",
-              position: toast.POSITION.BOTTOM_RIGHT,
+        await toast.promise(createProduct(product), {
+          pending: {
+            render() {
+              return `Creando ${product[5]}`;
             },
-            success: {
-              render() {
-                return `${product[5]} Creado`
-              },
-              theme: "colored",
-              icon: "🥝"
-            },
-            error: `Error al crear ${product[5]}`,
+            theme: "dark",
+            icon: "🥣",
+            position: toast.POSITION.BOTTOM_RIGHT,
           },
-        );
+          success: {
+            render() {
+              return `${product[5]} Creado`;
+            },
+            theme: "colored",
+            icon: "🥝",
+          },
+          error: `Error al crear ${product[5]}`,
+        });
       }
-      // console.log(response)
       index++;
-    };
+    }
 
-    console.log("Mostrar alert aqui :3")
-  };
+    console.log("Mostrar alert aqui :3");
+  }
 
-  const localProducts = JSON.parse(localStorage.getItem('localProducts')) ?? [];
+  const localProducts = JSON.parse(localStorage.getItem("localProducts")) ?? [];
 
-  const [showCurrentProductDetail, setShowCurrentProductDetail] = useState(false)
+  const [showCurrentProductDetail, setShowCurrentProductDetail] =
+    useState(false);
 
-  const [currentProduct, setCurrentProduct] = useState({})
+  const [currentProduct, setCurrentProduct] = useState({});
 
   return (
     <div className="sticky">
-
       <ToastContainer />
       <div className="px-10">
         {/* <ProductDetail showCurrentProductDetail={showCurrentProductDetail} setShowCurrentProductDetail={setShowCurrentProductDetail} currentProduct={currentProduct} /> */}
@@ -74,7 +70,6 @@ const Products = ({ products, showLoadFile }) => {
             brand={!showLoadFile && products[2][4]}
           />
         )} */}
-
 
         <div className="flex justify-between mt-2">
           <h2 className="py-6 my-auto top-24 text-4xl font-bold text-gray-700">
@@ -90,7 +85,15 @@ const Products = ({ products, showLoadFile }) => {
         <div className="pb-6">
           {products.map(
             (product, index) =>
-              index > 2 && <Product key={index} product={product} index={index} setCurrentProduct={setCurrentProduct} setShowCurrentProductDetail={setShowCurrentProductDetail} />
+              index > 2 && (
+                <Product
+                  key={index}
+                  product={product}
+                  index={index}
+                  setCurrentProduct={setCurrentProduct}
+                  setShowCurrentProductDetail={setShowCurrentProductDetail}
+                />
+              )
           )}
         </div>
       </div>

@@ -32,10 +32,10 @@ const ListWooProducts = () => {
   async function getDescription(description) {
     description = description
       .replace(/<[^>]+>/g, "")
-      .replaceAll('"', '')
+      .replaceAll('"', "")
       .replaceAll("¿QUÉ ES?", "")
       .replaceAll("&nbsp;", "")
-      .replaceAll('&amp;', '&')
+      .replaceAll("&amp;", "&")
       .replaceAll("&gt;", ">")
       .replace("ACTIVOS PRINCIPALES", "¿ACTIVOS PRINCIPALES?")
       .replace("MODO DE USO", "¿MODO DE USO?")
@@ -46,14 +46,14 @@ const ListWooProducts = () => {
     return description.split(/¿+[a-z\s]+\?+/i);
   }
 
-  function getAttribute() { }
+  function getAttribute() {}
 
   // todo: Match every object with a column in a row for the csv
   /**
    * It takes an array of objects, and returns a CSV file
    */
   async function saveProducts() {
-    console.log("Click")
+    console.log("Click");
 
     let products = [
       [],
@@ -94,6 +94,7 @@ const ListWooProducts = () => {
         "14.PAÍS",
       ],
     ];
+
     for (const p of wooProducts) {
       let brand =
         p["attributes"].filter((a) => a.name == "MARCA")[0].options[0] ?? "";
@@ -110,9 +111,9 @@ const ListWooProducts = () => {
         `"${p["short_description"]
           .replace(regex, "")
           .replace(/<[^>]+>/g, "")
-          .replaceAll('&nbsp;', '')
-          .replaceAll('&amp;', '&')
-          .replaceAll('&#8211;', '-')
+          .replaceAll("&nbsp;", "")
+          .replaceAll("&amp;", "&")
+          .replaceAll("&#8211;", "-")
           .replaceAll("\n", "")}"`,
         p["price"],
         `"${description[0]}"`,
@@ -121,13 +122,13 @@ const ListWooProducts = () => {
         `"${description[3]}"`,
         p["attributes"].filter((a) => a.name == "MARCA")[0].options[0] ?? "",
         p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[0] ??
-        "",
+          "",
         p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[1] ??
-        "",
+          "",
         p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[2] ??
-        "",
+          "",
         p["attributes"].filter((a) => a.name == "CATEGORÍA")[0]?.options[3] ??
-        "",
+          "",
         p["attributes"].filter((a) => a.name == "¿CUÁL ES TU NECESIDAD?")[0]
           ?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "¿CUÁL ES TU NECESIDAD?")[0]
@@ -139,11 +140,13 @@ const ListWooProducts = () => {
         p["attributes"].filter((a) => a.name == "TIPO DE PIEL")[0]
           ?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "MODO DE USO")[0]?.options[0] ??
-        "",
+          "",
         p["attributes"].filter((a) => a.name == "TEXTURA")[0]?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "CONTENIDO")[0]?.options[0] ??
-        "",
-        p["attributes"].filter((a) => a.name == "FACTOR DE PROTECCIÓN SOLAR (SPF)")[0]?.options[0] ?? "",
+          "",
+        p["attributes"].filter(
+          (a) => a.name == "FACTOR DE PROTECCIÓN SOLAR (SPF)"
+        )[0]?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "COLOR")[0]?.options[0] ?? "",
         p["attributes"].filter((a) => a.name == "TESTADO DERMATOLÓGICAMENTE")[0]
           ?.options[0] ?? "",
@@ -155,7 +158,8 @@ const ListWooProducts = () => {
         p["attributes"].filter((a) => a.name == "PAÍS")[0]?.options[0] ?? "",
       ]);
     }
-    console.log(products)
+
+    console.log(products);
     downloadCSV(products);
   }
 

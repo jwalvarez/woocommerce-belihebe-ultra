@@ -9,6 +9,7 @@ import SideBar from "./components/SideBar";
 import Products from "./components/Products";
 import ReadFile from "./components/ReadFile";
 import ListWooProducts from "./pages/ListWooProducts";
+import Settings from "./pages/Settings";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -45,6 +46,7 @@ function App() {
                 }
               ></Route>
               <Route path="products/list" element={<ListWooProducts />}></Route>
+              <Route path="settings" element={<Settings />}></Route>
             </Routes>
           </div>
         </div>

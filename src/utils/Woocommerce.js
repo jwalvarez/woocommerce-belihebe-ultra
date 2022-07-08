@@ -1,13 +1,23 @@
 import axios from "axios";
 import { categories } from "../constants/categories"
+import { getWooProductID } from "./getWooProductID";
 
 const ck = import.meta.env.VITE_CONSUMER_KEY
 const cs = import.meta.env.VITE_CONSUMER_SECRET
 
 export async function createProduct(product) {
-  console.log("CREANDO PRODUCTO");
+  console.log("- - - - - - - - - - - - - -");
+
+  // const sku = product[3]
+  // const searchResult = await getWooProductID(product[5])
+  // const id = searchResult.filter(e => e.name == product[5])[0].id;
+  // console.log('ID: ',id);
+  // console.log('NAME: ',product[5]);
+  
   const wooProduct = {
-    name: product[5],
+    // id: id,
+    // sku: sku,
+    name: `${product[13]} ${product[5]}`,
     type: "simple",
     status: "private",
     regular_price: product[8].toString(),
@@ -16,15 +26,15 @@ export async function createProduct(product) {
 
     ${product[9]}
 
-    ¿BENEFICIOS?
+    <strong>¿BENEFICIOS?</strong>
 
     ${product[10]}
 
-    ¿ACTIVOS PRINCIPALES?
+    <strong>¿ACTIVOS PRINCIPALES?</strong>
 
     ${product[11]}
 
-    ¿MODO DE USO?
+    <strong>¿MODO DE USO?</strong>
 
     ${product[12]}
     ` ,
@@ -109,13 +119,17 @@ export async function createProduct(product) {
     ],
     images: [
       {
-        src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg",
+        // src: `https://www.${product[0]}`,
+        src: `${product[0]}`,
       },
       {
-        src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg",
+        // src: "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg",
+        // src: `https://www.${product[1]}`,
+        src: `${product[1]}`,
       },
     ],
   };
+  
   console.log(wooProduct);
 
   await axios({
