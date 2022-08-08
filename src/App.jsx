@@ -7,9 +7,11 @@ import Product from "./components/Product";
 import Resume from "./components/Resume";
 import SideBar from "./components/SideBar";
 import Products from "./components/Products";
+import UpdateProducts from "./components/UpdateProducts";
 import ReadFile from "./components/ReadFile";
 import ListWooProducts from "./pages/ListWooProducts";
 import Settings from "./pages/Settings";
+import UpdateSiigoProducts from "./pages/UpdateSiigoProducts";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -45,8 +47,21 @@ function App() {
                   <Products products={products} showLoadFile={showLoadFile} />
                 }
               ></Route>
+              <Route
+                path="products/update"
+                element={
+                  <UpdateProducts
+                    products={products}
+                    showLoadFile={showLoadFile}
+                  />
+                }
+              ></Route>
               <Route path="products/list" element={<ListWooProducts />}></Route>
               <Route path="settings" element={<Settings />}></Route>
+              <Route
+                path="update_products"
+                element={<UpdateSiigoProducts />}
+              ></Route>
             </Routes>
           </div>
         </div>

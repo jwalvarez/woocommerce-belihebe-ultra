@@ -34,6 +34,15 @@ const SideBar = () => {
         </li>
         <li>
           <span className="my-0 px-6 py-2 flex">
+            <Link to="products/update">
+              <h2 className="cursor-pointer text-indigo-500 hover:text-indigo-400 text-xl font-black my-auto ml-2">
+                Actualizar Productos 🌌
+              </h2>
+            </Link>
+          </span>
+        </li>
+        <li>
+          <span className="my-0 px-6 py-2 flex">
             <Link to="products/list">
               <h2 className="cursor-pointer text-indigo-500 hover:text-indigo-400 text-xl font-black my-auto ml-2">
                 Descargar Productos
@@ -46,6 +55,15 @@ const SideBar = () => {
             <Link to="settings">
               <h2 className="cursor-pointer text-indigo-500 hover:text-indigo-400 text-xl font-black my-auto ml-2">
                 Configurar
+              </h2>
+            </Link>
+          </span>
+        </li>
+        <li>
+          <span className="my-0 px-6 py-2 flex">
+            <Link to="update_products">
+              <h2 className="cursor-pointer text-indigo-500 hover:text-indigo-400 text-xl font-black my-auto ml-2">
+                Actualizar Productos Siigo
               </h2>
             </Link>
           </span>

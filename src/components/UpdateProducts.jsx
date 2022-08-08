@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import Resume from "./Resume";
 import Product from "./Product";
 import { createProduct } from "../utils/Woocommerce";
+import { updateProduct } from "../utils/UpdateWooProduct";
 import ProductDetail from "./ProductDetail";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Products = ({ products, showLoadFile }) => {
+const UpdateProducts = ({ products, showLoadFile }) => {
   const notify = (product) => {
     toast.success(`${product} Creado`, {
       position: toast.POSITION.TOP_RIGHT,
@@ -16,7 +17,7 @@ const Products = ({ products, showLoadFile }) => {
     });
   };
 
-  async function creteProducts() {
+  async function updateProducts() {
     // console.log(createProduct(products[3]));
     // const response = await createProduct(products[3]);
     // console.log(response);
@@ -26,10 +27,10 @@ const Products = ({ products, showLoadFile }) => {
     for await (const product of products) {
       let response;
       if (index > 1) {
-        await toast.promise(createProduct(product), {
+        await toast.promise(updateProduct(product), {
           pending: {
             render() {
-              return `Creando ${product[5]}`;
+              return `Actualizando ${product[5]}`;
             },
             theme: "dark",
             icon: "🥣",
@@ -37,12 +38,12 @@ const Products = ({ products, showLoadFile }) => {
           },
           success: {
             render() {
-              return `${product[5]} Creado`;
+              return `${product[5]} Actualizado`;
             },
             theme: "colored",
             icon: "🥝",
           },
-          error: `Error al crear ${product[5]}`,
+          error: `Error al actualizar ${product[5]}`,
         });
       }
       index++;
@@ -76,10 +77,10 @@ const Products = ({ products, showLoadFile }) => {
             Productos desde excel
           </h2>
           <button
-            onClick={() => creteProducts(products)}
+            onClick={() => updateProducts(products)}
             className="px-10 my-5 col-end-7 col-span-2 group relative py-3 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg shadow-indigo-400"
           >
-            Montar Productos
+            Actualizar Productos
           </button>
         </div>
         <div className="pb-6">
@@ -101,4 +102,4 @@ const Products = ({ products, showLoadFile }) => {
   );
 };
 
-export default Products;
+export default UpdateProducts;

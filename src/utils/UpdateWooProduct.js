@@ -5,8 +5,11 @@ import { getWooProductID } from "./getWooProductID";
 const ck = import.meta.env.VITE_CONSUMER_KEY;
 const cs = import.meta.env.VITE_CONSUMER_SECRET;
 
-export async function createProduct(product) {
+export async function updateProduct(product) {
   console.log("- - - - - - - - - - - - - -");
+  const sku = product[3];
+  const productID = sku.split("-")[1];
+
   // const sku = product[3]
   // const searchResult = await getWooProductID(product[5])
   // const id = searchResult.filter(e => e.name == product[5])[0].id;
@@ -17,9 +20,9 @@ export async function createProduct(product) {
     // id: id,
     // sku: sku,
     name: `${product[13]} ${product[5]}`,
-    type: "simple",
-    status: "private",
-    regular_price: product[8].toString(),
+    // type: "simple",
+    // status: "private",
+    // regular_price: product[8].toString(),
     description: `
     <strong>¿QUÉ ES?</strong>
 
@@ -38,12 +41,12 @@ export async function createProduct(product) {
     ${product[12]}
     `,
     short_description: product[7],
-    categories: [
-      { id: categories.filter((e) => e.name === product[14])[0].id },
-      { id: categories.filter((e) => e.name === product[15])[0]?.id },
-      { id: categories.filter((e) => e.name === product[16])[0]?.id },
-      { id: categories.filter((e) => e.name === product[17])[0]?.id },
-    ],
+    // categories: [
+    //   { id: categories.filter((e) => e.name === product[14])[0].id },
+    //   { id: categories.filter((e) => e.name === product[15])[0]?.id },
+    //   { id: categories.filter((e) => e.name === product[16])[0]?.id },
+    //   { id: categories.filter((e) => e.name === product[17])[0]?.id },
+    // ],
     attributes: [
       {
         id: 3,
@@ -142,16 +145,16 @@ export async function createProduct(product) {
   console.log(wooProduct);
 
   await axios({
-    method: "post",
-    url: `https://www.belihebe.com/wp-json/wc/v3/products?consumer_key=${ck}&consumer_secret=${cs}`,
+    method: "put",
+    url: `https://www.belihebe.com/wp-json/wc/v3/products/${productID}?consumer_key=${ck}&consumer_secret=${cs}`,
     data: wooProduct,
   })
     .then(function (response) {
-      console.log("PRODUCTO CREADO");
+      console.log("PRODUCTO MODIFICADO");
       console.log(response);
     })
     .catch(function (error) {
-      console.log("ERROR AL CREAR PRODUCTO");
+      console.log("ERROR AL MODIFICAR PRODUCTO");
       console.log(error);
     });
 }

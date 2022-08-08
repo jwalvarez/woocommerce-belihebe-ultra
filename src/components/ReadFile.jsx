@@ -5,6 +5,7 @@ import Products from "./Products";
 const ReadFile = ({ showLoadFile, setProducts, setShowLoadFile }) => {
   // const input = document.getElementById("input");
 
+  // Arrow function
   const readExcel = () => {
     const input = document.getElementById("input");
     input &&
